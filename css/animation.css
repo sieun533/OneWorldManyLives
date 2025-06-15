@@ -1,0 +1,153 @@
+@charset "utf-8";
+
+@keyframes walking {
+    from {
+        background-position-x:0;
+    }
+    to {
+        background-position-x:-640px;
+    }
+}
+@keyframes default_car1 {
+    0% {left: 1105px; opacity: 1;}
+    25% {left: -400px; opacity: 1;}
+    25.1% {left: -400px; opacity: 0;}
+    25.2% {left: 1105px; opacity: 0;}
+    40% {left: 1105px; opacity: 1;}
+    65% {left: -400px; opacity: 1;}
+    65.1% {left: -400px; opacity: 0;}
+    65.2% {left: 1105px; opacity: 0;}
+    80% {left: 1105px; opacity: 1;}
+    100% {left: -400px; opacity: 1;}
+}
+@keyframes default_car2 {
+    0% {left: 1105px; opacity: 1;}
+    19% {left: -400px; opacity: 1;}
+    19.1% {left: -400px; opacity: 0;}
+    19.2% {left: 1105px; opacity: 0;}
+    30% {left: 1105px; opacity: 1;}
+    55% {left: -400px; opacity: 1;}
+    55.1% {left: -400px; opacity: 0;}
+    55.2% {left: 1105px; opacity: 0;}
+    55.3% {left: 1105px; opacity: 1;}
+    82% {left: -400px; opacity: 1;}
+    82.1% {left: -400px; opacity: 0;}
+    82.2% {left: 1105px; opacity: 0;}
+    82.3% {left: 1105px; opacity: 1;}
+    100% {left: -400px; opacity: 1;}
+}
+@keyframes default_car3 {
+    0% {left: 1105px; opacity: 1;}
+    23% {left: -400px; opacity: 1;}
+    23.1% {left: -400px; opacity: 0;}
+    23.2% {left: 1105px; opacity: 0;}
+    23.3% {left: 1105px; opacity: 1;}
+    46% {left: -400px; opacity: 1;}
+    46.1% {left: -400px; opacity: 0;}
+    46.2% {left: 1105px; opacity: 0;}
+    66% {left: 1105px; opacity: 1;}
+    89% {left: -400px; opacity: 1;}
+    100% {left: -400px; opacity: 0;}
+}
+@keyframes default_car4 {
+    0% {left: 1105px; opacity: 1;}
+    17% {left: -400px; opacity: 1;}
+    17.1% {left: -400px; opacity: 0;}
+    17.2% {left: 1105px; opacity: 0;}
+    30% {left: 1105px; opacity: 1;}
+    58% {left: -400px; opacity: 1;}
+    58.1% {left: -400px; opacity: 0;}
+    58.2% {left: 1105px; opacity: 0;}
+    58.3% {left: 1105px; opacity: 1;}
+    87% {left: -400px; opacity: 1;}
+    87.1% {left: -400px; opacity: 0;}
+    87.2% {left: 1105px; opacity: 0;}
+    87.3% {left: 1105px; opacity: 1;}
+    100% {left: -400px; opacity: 1;}
+}
+
+@keyframes car_ivory {
+    0% {left: 366px;}
+    15% {left: -400px; opacity: 1;}
+    15.1% {left: -400px; opacity: 0;}
+    15.2% {left: 1105px; opacity: 0;}
+    15.3% {left: 1105px; opacity: 1;}
+    45% {left: -400px; opacity: 1;}
+    45.1% {left: -400px; opacity: 0;}
+    45.2% {left: 1105px; opacity: 0;}
+    45.3% {left: 1105px; opacity: 1;}
+    60% {left: 366px;}
+    100% {left: 366px;}
+}
+@keyframes car_blue {
+    0% {left: 1105px; opacity: 1;}
+    25% {left: -400px; opacity: 1;}
+    25.1% {left: -400px; opacity: 0;}
+    25.2% {left: 1105px; opacity: 0;}
+    25.3% {left: 1105px; opacity: 1;}
+    43% {left: -400px; opacity: 1;}
+    43.1% {left: -400px; opacity: 0;}
+    43.2% {left: 1105px; opacity: 0;}
+    43.3% {left: 1105px; opacity: 1;}
+    60% {left: -400px; opacity: 1;}
+    100% {left: -400px; opacity: 0;}
+}
+@keyframes car_white {
+    0% {left: 366px;}
+    11% {left: -400px; opacity: 1;}
+    11.1% {left: -400px; opacity: 0;}
+    11.2% {left: 1105px; opacity: 0;}
+    11.3% {left: 1105px; opacity: 1;}
+    47% {left: -400px; opacity: 1;}
+    47.1% {left: -400px; opacity: 0;}
+    47.2% {left: 1105px; opacity: 0;}
+    47.3% {left: 1105px; opacity: 1;}
+    60% {left: 366px;}
+    100% {left: 366px;}
+}
+@keyframes car_black {
+    0% {left: 366px;}
+    18% {left: -400px; opacity: 1;}
+    18.1% {left: -400px; opacity: 0;}
+    18.2% {left: 1105px; opacity: 0;}
+    18.3% {left: 1105px; opacity: 1;}
+    46% {left: -400px; opacity: 1;}
+    46.1% {left: -400px; opacity: 0;}
+    46.2% {left: 1105px; opacity: 0;}
+    46.3% {left: 1105px; opacity: 1;}
+    80% {left: 805px; opacity: 1;}
+    100% {left: 366px;}
+}
+
+@keyframes opening {
+    0% { opacity: 1; }
+    10% { opacity: 1; }
+    25% { opacity: 0.4; }
+    32% { opacity: 0.75; }
+    45% { opacity: 0.15; }
+    55% { opacity: 0.6; }
+    65% { opacity: 0.05; }
+    85% { opacity: 0.01; }
+    100% { opacity: 0; }
+}
+
+@keyframes ending {
+    0% { opacity: 0; }
+    1% { opacity: 0; }
+    20% { opacity: 0.05; }
+    35% { opacity: 0.6; }
+    45% { opacity: 0.15; }
+    60% { opacity: 0.75; }
+    70% { opacity: 0.4; }s
+    85% { opacity: 0.99; }
+    100% { opacity: 1; }
+}
+
+@keyframes copyright {
+    0% { 
+        opacity: 0;  
+    }
+    100% { 
+        opacity: 1; 
+    }
+}

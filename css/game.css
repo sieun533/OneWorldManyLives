@@ -1,0 +1,649 @@
+@charset "utf-8";
+@import "animation.css";
+/* 초기화 */
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+ul, ol, li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+.opening {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #000;
+    animation: opening 5s ease-in-out forwards;
+    z-index: 1000;
+    pointer-events: none;
+}
+.ending {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #000;
+    animation: ending 5s ease-in-out forwards;
+    z-index: 1000;
+    pointer-events: none;
+}
+.ending .copyright {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    opacity: 0;
+}
+.copyAnim {
+    animation: copyright 3s ease-in forwards;
+}
+.copyright .copyright_text {
+    margin: 0;
+    font-size: 3rem;
+    font-weight: 700;
+    padding-bottom: 100px;
+}
+.copyright .game_name_ko {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 500;
+    padding-bottom: 10px;
+}
+.copyright .game_name_en {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 500;
+    padding-bottom: 100px;
+}
+.copyright .copyright-small {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 300;
+}
+
+
+
+/*전체 게임 씬 설정 */
+.gameScreen {
+    display: flex;
+    width: 1310px;
+    height: 900px;
+    margin: 2vh auto;
+}
+
+/*플레이어 설정*/
+.player {
+    position: absolute;
+    width: 88px;
+    height: 32px;
+    top: 435px;
+    left: 153px;
+    overflow: visible;
+    z-index: 15;
+}
+.player::before {
+    content: '';
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    top: -124px;
+    left: -36px;
+    background-image: url(../img/player.png);
+    
+}
+.player.cane::before {
+    background-image: url(../img/player_cane.png); /* 흰지팡이 든 스프라이트 */
+}
+
+/*플레이어 걷기 배경 변경 설정*/
+.player[data-direction='left']::before {
+   background-position:0 -480px;
+}
+.player[data-direction='right']::before {
+   background-position:0 -160px;
+}
+.player[data-direction='up']::before {
+   background-position:0 -320px;
+}
+.player[data-direction='down']::before {
+   background-position:0 0;
+}
+/*플레이어 걷기 애니메이션 설정*/
+.player[data-walking='true']::before {
+   animation: walking 1s steps(4) infinite;
+}
+
+
+
+/* 상호작용 알림 패널 */
+.interact-panel {
+    display: none;
+    position: absolute;
+    top: -70px;
+    left: -130px;
+    width: 140px;
+    height: 60px;
+    text-align: center;
+    line-height: 26px;
+    font-size: 16px;
+    background-image: url('../img/interact-panel.png');
+}
+
+/* 게임화면 */
+.Screen {
+    position: relative;
+    width: 1100px;
+    height: 900px;
+    overflow: hidden;
+}
+
+.blur-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    backdrop-filter: blur(20px);
+    z-index: 18;
+}
+.vignette {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: 
+        linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 5%, transparent 15%, transparent 85%, rgba(0,0,0,0.3) 95%, rgba(0,0,0,0.9) 100%),
+        linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 5%, transparent 15%, transparent 85%, rgba(0,0,0,0.3) 95%, rgba(0,0,0,0.9) 100%);
+    z-index: 19;
+}
+ 
+/* 배경이미지, 디스플레이 설정*/
+.bgImg {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1100px;
+    height: 900px;
+    z-index: 1;
+}
+.chapter_1, .chapter_2, .chapter_3, .chapter_4, .chapter_5 {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1100px;
+    height: 900px;
+    z-index: 1;
+}
+
+.chapter_1 {
+    display: block;
+    background-image: url(../img/room_day.png);
+}
+.chapter_2 {
+    background-image: url(../img/road.png);
+}
+.chapter_3 {
+    background-image: url(../img/office.png);
+}
+.chapter_4 {
+    background-image: url(../img/road_night.png);
+}
+.chapter_5 {
+    background-image: url(../img/room_night.png);
+}
+
+/*챕터 1 아이템 스타일*/
+.items {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    cursor: pointer;
+}
+.items .room_cane{
+    position: absolute;
+    top: 560px;
+    left: 985px;
+    width: 26px;
+    height: 133px;
+    z-index: 3;
+    cursor: pointer;
+}
+.items .room_phone {
+    position: absolute;
+    top: 332px;
+    left: 361px;
+    cursor: pointer;
+}
+.items .room_audible {
+    position: absolute;
+    top: 325px;
+    left: 615px;
+    cursor: pointer;
+}
+.items .room_airpods {
+    position: absolute;
+    top: 790px;
+    left: 290px;
+    cursor: pointer;
+}
+
+/* 챕터3 텍스트 미션 스타일 */
+.mission_3 {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1100px;
+    height: 900px;
+    background-color: rgba(55, 55, 55, 0.7);
+    z-index: 30;
+}
+.chapter_3 .audio_btn_container {
+    display: flex;
+    position: relative;
+    top: 200px;
+    left: 550px;
+    width: 400px;
+    justify-content: space-between;
+}
+.audio_btn {
+    width: 104px;
+    height: 88px;
+    text-align: center;
+    line-height: 74px;
+    background-image: url("../img/audio_button_up.png");
+    color: #fff;
+    font-size: 1.25rem;
+    font-family: "Do Hyeon";
+    cursor: pointer;
+}
+.audio_btn.down {
+    position: relative;
+    top: 9px;
+    width: 104px;
+    height: 79px;
+    background-image: url("../img/audio_button_down.png");
+}
+.audio_btn.clear {
+    position: relative;
+    top: 9px;
+    width: 104px;
+    height: 79px;
+    background-image: url("../img/audio_button_clear.png");
+    pointer-events: none;
+}
+.chapter_3 input {
+    position: absolute;
+    top: 350px;
+    left: 535px;
+    width: 400px;
+    height: 40px;
+    padding: 0 10px;
+    border-radius: 5px;
+    border:3px solid #3A4A28;
+    font-size: 1rem;
+    white-space: normal;
+    word-spacing: normal;
+}
+.chapter_3 button {
+    position: absolute;
+    top: 350px;
+    left: 940px;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    border:3px solid #3A4A28;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* 챕터 5 스크롤 미션 스타일 */
+.mission_5 {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1100px;
+    height: 900px;
+    background-color: rgba(55, 55, 55, 0.7);
+    z-index: 30;
+}
+.phone_display {
+    position: absolute;
+    top: 8px;
+    left: 350px;
+    width: 564px;
+    height: 884px;
+}
+.phone_display .back_display_off {
+    position: absolute;
+    top: 30px;
+    left: 33px;
+    width: 497px;
+    height: 756px;
+    background-color: #262626;
+    z-index: 1;
+    cursor: pointer;
+}
+.phone_display .back_display {
+    display: none;
+    position: absolute;
+    top: 30px;
+    left: 33px;
+    width: 497px;
+    height: 756px;
+    overflow: scroll;
+    z-index: 2;
+}
+.back_display::-webkit-scrollbar {
+    display:none;
+}
+.back_display img {
+    width: 497px;
+    height: 1993px;
+}
+.phone_display .phone_frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+.back_display .insta_img_1 {
+    position: absolute;
+    top: 129px;
+    width: 497px;
+    height: 372px;
+    border: 3px solid rgb(195, 195, 195);
+    text-align: center;
+    line-height: 372px;
+    color: rgb(195, 195, 195);
+    cursor: pointer;
+}
+.back_display .insta_img_2 {
+    position: absolute;
+    top: 679px;
+    width: 497px;
+    height: 497px;
+    border: 3px solid rgb(195, 195, 195);
+    text-align: center;
+    line-height: 497px;
+    color: rgb(195, 195, 195);
+    cursor: pointer;
+}
+.back_display .insta_img_3 {
+    position: absolute;
+    top: 1357px;
+    width: 497px;
+    height: 497px;
+    border: 3px solid rgb(195, 195, 195);
+    text-align: center;
+    line-height: 497px;
+    color: rgb(195, 195, 195);
+    cursor: pointer;
+}
+
+
+
+/* 챕터2 , 챕터3, 챕터4 배경아이템 */
+.bgItems {
+    position:relative;
+    top: 0;
+    left: 0;
+}
+.building {
+    position: absolute;
+    top: 220px;
+    left: 765px;
+    z-index: 2;
+}
+.bus_stop {
+    position: absolute;
+    top: 555px;
+    left: 423px;
+    z-index: 2;
+}
+
+.ivory {
+    position: absolute;
+    top: 175px;
+    left: 366px;
+    animation: car_ivory 12.5s linear infinite;
+}
+.blue {
+    position: absolute;
+    top: 285px;
+    left: 366px;
+    animation: car_blue 12.5s linear infinite;
+}
+.white {
+    position: absolute;
+    top: 410px;
+    left: 366px;
+    animation: car_white 12.5s linear infinite;
+}
+.black {
+    position: absolute;
+    top: 520px;
+    left: 366px;
+    animation: car_black 12.5s linear infinite;
+}
+
+.de_car1 {
+    position: absolute;
+    top: 175px;
+    left: 366px;
+    animation: default_car1 12.5s linear infinite;
+}
+.de_car2 {
+    position: absolute;
+    top: 285px;
+    left: 366px;
+    animation: default_car2 12.5s linear infinite;
+}
+.de_car3 {
+    position: absolute;
+    top: 410px;
+    left: 366px;
+    animation: default_car3 12.5s linear infinite;
+}
+.de_car4 {
+    position: absolute;
+    top: 520px;
+    left: 366px;
+    animation: default_car4 12.5s linear infinite;
+}
+
+.of_table_back {
+    position: absolute;
+    top: 400px;
+    left: 563px;
+}
+
+/* 플레이어 위에 올라오는 배경요소들 */
+.chapter_1_front {
+    position: relative;
+}
+.blanket {
+    position: absolute;
+    top: 380px;
+    left: 80px;
+    z-index: 15;
+}
+.chapter_2_front {
+    display: none;
+    position: relative;
+}
+.pillar {
+    position: absolute;
+    top: 0px;
+    left: 30px;
+    z-index: 15;
+}
+.chapter_3_front {
+    display: none;
+    position: relative;
+}
+.of_table {
+    position: absolute;
+    top: 400px;
+    left: 563px;
+    z-index: 15;
+    display: none;
+}
+.chapter_4_front {
+    display: none;
+    position: relative;
+}
+.pillar {
+    position: absolute;
+    top: 0px;
+    left: 30px;
+    z-index: 15;
+}
+.chapter_5_front {
+    display: none;
+    position: relative;
+}
+.blanket_night {
+    position: absolute;
+    top: 380px;
+    left: 80px;
+    z-index: 15;
+}
+
+/* 인벤토리*/
+.ItemBox {
+    position: relative;
+    width: 210px;
+    height: 900px;
+    background-image: url(../img/itembox.png);
+}
+.missionBtn {
+    position: relative;
+    margin: 30px auto;
+    width: 150px;
+    height: 80px;
+    /* background-image: url(img/mission_btn_up.png); */
+    transition: transform 0.05s ease;
+    cursor: pointer;
+}
+.missionBtn img {
+    width: 100%;
+    height: 100%;
+}
+.missionBtn:active img {
+    width: 150px;
+    height: 70px;
+    transform: translateY(10px);
+    background-image: url(../img/mission_btn_down.png);
+}
+.inventory {
+    display: flex;
+    position: relative;
+    width: 210px;
+    height: 690px;
+    margin-top: 70px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.inventory .slot {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 30px; 
+    object-fit: contain;
+    cursor: pointer;
+}
+.inventory .slot:nth-last-child(1) {
+    margin-bottom: 0px;
+}
+.select_item {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.mission_modal {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1100px;
+    height: 900px;
+    background-color: rgba(0,0,0, 0.7);
+    z-index: 20;
+}
+.mission_panel {
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    width: 900px;
+    height: 700px;
+    font-family: "Do Hyeon";
+    background-image: url(../img/mission_panel.png);
+    z-index: 5;
+}
+.mission_panel h1 {
+    margin-top: 50px;
+    text-align: center;
+    color: #3A4A28;
+    font-family: "Do Hyeon";
+    font-size: 3rem;
+}
+.mission_content {
+    margin-top: 50px;
+    text-align: center;
+    color: #3A4A28;
+    font-family: "Do Hyeon";
+    font-size: 2rem;
+}
+.mission_description {
+    margin-top: 70px;
+    line-height: 4rem;
+}
+
+.slot.inItem:hover::after {
+    content: attr(data-tooltip); /* 툴팁으로 구현 */
+    position: absolute;
+    left: 160px;
+    top: 10px;
+    width: 210px;
+    padding: 10px;
+    color: #fff;
+    background: #3A4A28;
+    line-height: 1.5rem;
+    border-radius: 2px;
+    font-family: "Do Hyeon";
+    font-size: 1.25rem;
+    z-index: 2;
+    white-space: pre-line; /* 줄바꿈 허용 */
+}
